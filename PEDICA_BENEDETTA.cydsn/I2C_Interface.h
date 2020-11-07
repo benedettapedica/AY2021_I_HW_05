@@ -19,6 +19,8 @@
     ErrorCode I2C_Peripheral_Start(void);
     ErrorCode I2C_Peripheral_Stop(void);
     
+    uint8 I2C_IsDeviceConnected(uint8_t device_address);
+    
     ErrorCode I2C_Peripheral_ReadRegister(uint8_t device_address, 
                                             uint8_t register_address,
                                             uint8_t* data);
@@ -27,6 +29,7 @@
                                             uint8_t register_address,
                                             uint8_t data);
 
+    
 #endif
 
 

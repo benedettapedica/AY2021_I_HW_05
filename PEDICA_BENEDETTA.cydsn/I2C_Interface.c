@@ -28,6 +28,18 @@
         // Return no error since stop function does not return any error
         return NO_ERROR;
     }
+    
+    uint8 I2C_IsDeviceConnected(uint8 device_address)
+     {
+        //send a start condition followed by a stop condition
+        uint8 connection = I2C_MasterSendStart(device_address, I2C_WRITE_XFER_MODE);
+        I2C_MasterSendStop();
+
+        if (connection == I2C_MSTR_NO_ERROR) //return 1 if the device is connected, 0 otherwise
+            return 1; 
+        else
+            return 0;
+     }
 
     ErrorCode I2C_Peripheral_ReadRegister(uint8_t device_address, 
                                             uint8_t register_address,
