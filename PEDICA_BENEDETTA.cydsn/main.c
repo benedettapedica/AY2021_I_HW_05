@@ -31,9 +31,22 @@
 #define LIS3DH_OUT_Z_L 0x2C
 #define LIS3DH_OUT_Z_H 0x2D
 
-#define M_digit_to_ms2 2000*9.81/2047
+#define M_digit_to_ms2 2*9.81/2047
 #define Q_digit_to_ms2 M_digit_to_ms2*4095
 
+ErrorCode error;
+uint8_t Acc_X[2];
+uint8_t Acc_Y[2];
+uint8_t Acc_Z[2];
+int16 A_X;
+int16 A_Y;
+int16 A_Z;
+uint16 A_X_u;
+uint16 A_Y_u;
+uint16 A_Z_u;
+float A_X_Conv;
+float A_Y_Conv;
+float A_Z_Conv;
 
 int main(void)
 {
@@ -46,16 +59,6 @@ int main(void)
        
     CyGlobalIntEnable; 
 
-    ErrorCode error;
-    uint8_t Acc_X[2];
-    uint8_t Acc_Y[2];
-    uint8_t Acc_Z[2];
-    int16 A_X;
-    int16 A_Y;
-    int16 A_Z;
-    uint16 A_X_u;
-    uint16 A_Y_u;
-    uint16 A_Z_u;
          
     CyDelay(5);
 
@@ -133,10 +136,7 @@ int main(void)
                                             LIS3DH_OUT_Z_H,
                                             &Acc_Z[1]);
         
-    float A_X_Conv;
-    float A_Y_Conv;
-    float A_Z_Conv;
-    
+      
     uint8_t header = 0xA0;
     uint8_t footer = 0xC0;
     uint8_t Acceleration[8];
@@ -145,51 +145,51 @@ int main(void)
                     
     if (error==NO_ERROR)
     {
-     A_X =(int16_t)((Acc_X[0] | (Acc_X[1]<<8)))>>4;
-     A_Y =(int16_t)((Acc_Y[0] | (Acc_Y[1]<<8)))>>4;
-     A_Z =(int16_t)((Acc_Z[0] | (Acc_Z[1]<<8)))>>4;
+     A_X_u =(uint16_t)((Acc_X[0] | (Acc_X[1]<<8)))>>4;
+     A_Y_u =(uint16_t)((Acc_Y[0] | (Acc_Y[1]<<8)))>>4;
+     A_Z_u=(uint16_t)((Acc_Z[0] | (Acc_Z[1]<<8)))>>4;
     
-        if (A_X >= 0 && A_X <=2047)
+        if (A_X_u>= 0 && A_X_u <=2047)
         {
-          A_X_Conv= (float) (A_X*M_digit_to_ms2)*1000;
+          A_X_Conv = (A_X*M_digit_to_ms2)*1000;
         }
         
-        else
+        else if (A_X_u >2047 && A_X_u <4095)
         {
-          A_X_Conv= (float) (A_X*M_digit_to_ms2-Q_digit_to_ms2)*1000; 
+          A_X_Conv = (A_X_u*M_digit_to_ms2-Q_digit_to_ms2)*1000; 
         }
         
-        A_X_u= (int16) (A_X_Conv);
-        Acceleration[1] = A_X_u & 0xFF;
-        Acceleration[2] = A_X_u >>8;
+        A_X= (int16) (A_X_Conv);
+        Acceleration[1] = A_X & 0xFF;
+        Acceleration[2] = A_X >>8;
         
-         if (A_Y >= 0 && A_Y <=2047)
+         if (A_Y_u >= 0 && A_Y_u <=2047)
         {
-          A_Y_Conv= (A_Y*M_digit_to_ms2)*1000;
+          A_Y_Conv= (A_Y_u*M_digit_to_ms2)*1000;
         }
         
-        else
+        else if (A_Y_u >2047 && A_Y_u <4096)
         {
-          A_Y_Conv= (A_Y*M_digit_to_ms2-Q_digit_to_ms2)*1000; 
+          A_Y_Conv= (A_Y_u*M_digit_to_ms2-Q_digit_to_ms2)*1000; 
         }
         
-        A_Y_u = (int16) (A_Y_Conv);
-        Acceleration[3] = A_Y_u & 0xFF;
-        Acceleration[4] = A_Y_u >>8;
+        A_Y = (int16) (A_Y_Conv);
+        Acceleration[3] = A_Y & 0xFF;
+        Acceleration[4] = A_Y >>8;
         
-        if (A_Z >= 0 && A_Z <=2047)
+        if (A_Z_u >= 0 && A_Z_u <=2047)
         {
-          A_Z_Conv= (A_Z*M_digit_to_ms2)*1000;
+          A_Z_Conv= (A_Z_u*M_digit_to_ms2)*1000;
         }
         
-        else
+        else if (A_Z_u >2047 && A_Z_u <4096)
         {
-          A_Z_Conv= (A_Z*M_digit_to_ms2-Q_digit_to_ms2)*1000; 
+          A_Z_Conv= (A_Z_u*M_digit_to_ms2-Q_digit_to_ms2)*1000; 
         }
         
-        A_Z_u = (int16) (A_Z_Conv);
-        Acceleration[5] = A_Z_u & 0xFF;
-        Acceleration[6] = A_Z_u >>8;
+        A_Z = (int16) (A_Z_Conv);
+        Acceleration[5] = A_Z & 0xFF;
+        Acceleration[6] = A_Z >>8;
      
         UART_PutArray(Acceleration,8);
         
