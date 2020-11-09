@@ -11,39 +11,8 @@
 */
 #include "project.h"
 #include "I2C_Interface.h"
-#include "stdio.h"
 #include "InterruptRoutines.h"
-
-#define LIS3DH_OUT_X_L 0x28
-#define LIS3DH_OUT_X_H 0x29
-#define LIS3DH_OUT_Y_L 0x2A
-#define LIS3DH_OUT_Y_H 0x2B
-#define LIS3DH_OUT_Z_L 0x2C
-#define LIS3DH_OUT_Z_H 0x2D 
-
-#define gravity 9.81
-
-#define M_digit_to_ms2 4*gravity/4095
-
-#define MSB 1
-#define LSB 0
-#define DATA_READY 0b00001000 
-
-#define HEAD 0xA0
-#define TAIL 0xC0
-
-#define TRANSMIT_SIZE 1+ACC_BYTES+1
-#define ACC_BYTES 6
-#define START 0
-#define AX_L 1
-#define AX_M 2    
-#define AY_L 3
-#define AY_M 4
-#define AZ_L 5
-#define AZ_M 6
-#define END TRANSMIT_SIZE-1
-
-#define ACC_SIZE 2
+#include "Macros.h"
 
 ErrorCode error;
 
