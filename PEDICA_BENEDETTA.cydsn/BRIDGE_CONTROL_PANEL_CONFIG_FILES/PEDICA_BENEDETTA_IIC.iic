@@ -1,0 +1,8 @@
+; RX8 packet structure
+; Header = {0xA0}
+; Data = {2 bytes acceleration on x axis int16,
+;         2 bytes acceleration on y axis int16, 
+;         2 bytes acceleration on z axis int16} 
+; Tail = {0xC0}
+; Packet_size = 8 Byte
+rx8 [h=A0] @0aX @1aX @0aY @1aY @0aZ @1aZ [t=C0]

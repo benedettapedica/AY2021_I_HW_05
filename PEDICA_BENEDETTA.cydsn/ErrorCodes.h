@@ -1,11 +1,8 @@
 /* ========================================
  *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
- *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
+ * Header file where error is defined.
+ * \author Benedetta Pedica
+ * \date: 14 November 2020
  *
  * ========================================
 */
@@ -14,8 +11,8 @@
     
     typedef enum 
     {
-        NO_ERROR,           ///< No error generated
-        ERROR               ///< Error generated
+        NO_ERROR,           // No errors, comunication is succsessful
+        ERROR               // Occurrence of an error, error message displayed through UART 
     } ErrorCode;
 
 #endif

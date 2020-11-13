@@ -1,11 +1,8 @@
 /* ========================================
  *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
- *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
+ * Brief .c file to define the ISR related to Debouncer of push button.
+ * \author Benedetta Pedica
+ * \date: 14 November 2020
  *
  * ========================================
 */

@@ -1,11 +1,8 @@
 /* ========================================
  *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
- *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
+ * Header file in which all the Macros used are defined.
+ * \author Benedetta Pedica
+ * \date: 14 November 2020
  *
  * ========================================
 */
@@ -17,12 +14,12 @@
 #define LIS3DH_CTRL_REG0     0x1E
 #define LIS3DH_CTRL_REG1     0x20
 #define LIS3DH_CTRL_REG4     0x23
-#define CTRL_REG4_HR         0x08
-#define LIS3DH_CTRL_REG1_ODR 0x57
+#define CTRL_REG4_HR         0x08 //high resolution mode
+#define LIS3DH_CTRL_REG1_ODR 0x57 //data rate 
 
 
 //adress of registers used to store value of acceleration in the three axes
-//divided in low and high
+//expressed as two complement left aligned 
 #define LIS3DH_OUT_X_L 0x28
 #define LIS3DH_OUT_X_H 0x29
 #define LIS3DH_OUT_Y_L 0x2A
@@ -40,7 +37,7 @@
 #define CTRL_REG1_FREQ200 0x67
 
 
-//adress of EEPROM register used to store different values of frequency
+//chosen adress of EEPROM register used to store different values of frequency
  #define EEPROM_FREQ_ADRESS 0x0000
 
 
@@ -49,7 +46,7 @@
 
 //macros used for the CONVERSION from digits to m/s2
 #define gravity 9.81
-#define M_digit_to_ms2 4*gravity/4095
+#define M_digit_to_ms2 4*gravity/4096
 
 
 //list of macros used to define the data packet that is sent through UART
@@ -73,7 +70,7 @@
 
 
 //this is done to check on the status register: if a new value is stored,
-//new values of acceleration are ready to be sent
+//this register is set to 1 and new set of data of acceleration are ready to be sent
 #define DATA_READY 0b00001000 
 
 
